@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <label>Title:</label>
+    <input type="text" id="titleInput" placeholder="Enter Title">
+<br>
+    <label>Description</label>
+    <textarea type="text" id="descInput" placeholder="Enter Description"></textarea>
+<br>
+    <button id="createLinkBtn">Create Link</button>
+
+    <h2>Links:</h2>
+    <div id ="linkList"></div>
+
+    <div id="page-view">
+        <h3 id="page-title"></h3>
+        <p id="page-desc"></p>
+        <button id="backBtn">Back to Link</button>
+    </div>
+    <script>
+        const linkList = document.getElementById('linkList');
+        const createLinkBtn = document.getElementById('createLinkBtn');
+        const titleInput = document.getElementById('titleInput');
+        const descInput = document.getElementById('descInput');
+        const pageView = document.getElementById('page-view');
+        const pageTitle = document.getElementById('page-title');
+        const pageDesc = document.getElementById('page-desc');
+        const backBtn = document.getElementById('backBtn');
+
+        const links = [];
+
+        createLinkBtn.addEventListener('click', () => {
+            const title = titleInput.value.trim();
+            const desc = descInput.value.trim();
+
+            if (!title || !desc) {
+                alert('Please enter both title and description.');
+                return;
+            }
+
+            const linkData = { title, desc };
+            links.push(linkData);
+
+            const linkElement = document.createElement('div');
+            linkElement.textContent = title;
+
+            linkElement.addEventListener('click', () => showPage(linkData));
+            linkList.appendChild(linkElement);
+
+            titleInput.value = '';
+            descInput.value = '';
+        });
+        function showPage(linkData){
+            pageTitle.textContent = linkData.title;
+            pageDesc.textContent = linkData.desc;
+            pageView.style.display = 'block';
+            linkList.style.display = 'none';
+        }
+        
+        backBtn.addEventListener('click', () => {
+            pageView.style.display = 'none';
+            linkList.style.display = 'block';
+        });
+    </script>
+
+
+</body>
+</html>
