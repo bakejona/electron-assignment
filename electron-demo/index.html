@@ -4,15 +4,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Election</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #ffffff; /* White background */
+            color: #000000; /* Black text */
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            color: #000000; /* Black headings */
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block; /* Makes labels appear on their own line */
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 95%; /* Adjust width as needed */
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 5px; /* Slightly rounded corners for inputs */
+            background-color: #f9f9f9; /* Very light grey background */
+            color: #000000; /* Black text */
+        }
+
+        textarea {
+            min-height: 60px; /* Give textarea some height */
+        }
+
+        button {
+            background-color: #000000; /* Black button background */
+            color: #ffffff; /* White button text */
+            border: none;
+            padding: 10px 15px;
+            margin-top: 15px;
+            cursor: pointer;
+            border-radius: 9999px; /* Full border radius (pill shape) */
+            font-size: 1em;
+            transition: background-color 0.2s; /* Smooth hover effect */
+        }
+
+        button:hover {
+            background-color: #333333; /* Darker grey on hover */
+        }
+
+        #linkList div {
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #cccccc; /* Light grey border for links */
+            background-color: #f0f0f0; /* Light grey background for links */
+            cursor: pointer;
+            border-radius: 5px; /* Slightly rounded corners */
+            transition: background-color 0.2s;
+        }
+
+        #linkList div:hover {
+            background-color: #e0e0e0; /* Slightly darker grey on hover */
+        }
+
+        #page-view {
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #000000; /* Black border */
+            border-radius: 15px; /* Rounded corners for the page view */
+            background-color: #f9f9f9; /* Very light grey background */
+            /* Initially hidden by JS */
+            display: none; 
+        }
+
+        /* Initial display none for back button, managed by JS */
+        /* #backBtn {} */
+
+    </style>
 </head>
 <body>
     <h1>Hello</h1>
-    <label>Title:</label>
-    <input type="text" id="titleInput" placeholder="Enter Title">
+    <label for="titleInput">Title:</label> <input type="text" id="titleInput" placeholder="Enter Title">
 <br>
-    <label>Description</label>
-    <textarea type="text" id="descInput" placeholder="Enter Description"></textarea>
-<br>
+    <label for="descInput">Description</label> <textarea id="descInput" placeholder="Enter Description"></textarea> <br>
     <button id="createLinkBtn">Create Link</button>
 
     <h2>Links:</h2>
@@ -23,6 +99,7 @@
         <p id="page-desc"></p>
         <button id="backBtn">Back to Link</button>
     </div>
+    
     <script>
         const linkList = document.getElementById('linkList');
         const createLinkBtn = document.getElementById('createLinkBtn');
@@ -34,6 +111,9 @@
         const backBtn = document.getElementById('backBtn');
 
         const links = [];
+
+        // Initially hide the page view section
+        pageView.style.display = 'none';
 
         createLinkBtn.addEventListener('click', () => {
             const title = titleInput.value.trim();
@@ -56,19 +136,34 @@
             titleInput.value = '';
             descInput.value = '';
         });
+        
         function showPage(linkData){
             pageTitle.textContent = linkData.title;
             pageDesc.textContent = linkData.desc;
-            pageView.style.display = 'block';
-            linkList.style.display = 'none';
+            pageView.style.display = 'block'; // Show page view
+            linkList.style.display = 'none';  // Hide link list
+            // Hide the create form section too
+            document.querySelector('label[for="titleInput"]').style.display = 'none';
+            titleInput.style.display = 'none';
+            document.querySelector('label[for="descInput"]').style.display = 'none';
+            descInput.style.display = 'none';
+            createLinkBtn.style.display = 'none';
+            document.querySelector('h1').style.display = 'none'; // Hide main heading
+             document.querySelector('h2').style.display = 'none'; // Hide "Links:" heading
         }
         
         backBtn.addEventListener('click', () => {
-            pageView.style.display = 'none';
-            linkList.style.display = 'block';
+            pageView.style.display = 'none'; // Hide page view
+            linkList.style.display = 'block'; // Show link list
+             // Show the create form section again
+            document.querySelector('label[for="titleInput"]').style.display = 'block';
+            titleInput.style.display = 'block';
+            document.querySelector('label[for="descInput"]').style.display = 'block';
+            descInput.style.display = 'block';
+            createLinkBtn.style.display = 'block';
+             document.querySelector('h1').style.display = 'block'; // Show main heading
+            document.querySelector('h2').style.display = 'block'; // Show "Links:" heading
         });
     </script>
-
-
 </body>
 </html>
